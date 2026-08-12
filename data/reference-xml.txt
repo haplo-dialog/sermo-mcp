@@ -1,0 +1,359 @@
+HAPLO-DIALOG-XML(5)         Haplo-Linux File Formats         HAPLO-DIALOG-XML(5)
+
+NOM
+     haplo-dialog-xml - syntaxe XML des dialogues haplo-dialog
+
+DESCRIPTION
+     haplo-dialog  lit  une description d'interface graphique écrite dans un di‐
+     alecte XML et affiche la fenêtre correspondante. Cette  page  documente  la
+     syntaxe XML lue par la commande gtk3dialog(1), également accessible sous le
+     nom gtkdialog(1).
+
+     La  syntaxe est héritée de gtkdialog 0.8.3 (László Pere, 2003-2013) et por‐
+     tée sur GTK3.
+
+
+STRUCTURE GÉNÉRALE
+         <window title="Titre" width-request="400" height-request="200">
+           <vbox>
+             <text><label>Bonjour !</label></text>
+             <entry><variable>MON_CHAMP</variable></entry>
+             <button ok></button>
+           </vbox>
+         </window>
+
+     Chaque dialogue doit avoir un unique élément racine <window>.  Les  widgets
+     sont imbriqués dans des conteneurs (<hbox>, <vbox>, <frame>, etc.).
+
+
+ATTRIBUTS COMMUNS
+     Les attributs suivants sont disponibles sur la plupart des widgets :
+
+
+     width-request=N
+            Largeur minimale en pixels.
+
+     height-request=N
+            Hauteur minimale en pixels.
+
+     visible=true|false
+            Visibilité initiale du widget (défaut : true).
+
+     sensitive=true|false
+            Interactivité du widget (défaut : true).
+
+     tooltip-text=texte
+            Infobulle affichée au survol.
+
+
+SOUS-ÉLÉMENTS COMMUNS
+     <label>texte</label>
+            Texte affiché ou étiquette du widget.
+
+     <variable>NOM</variable>
+            Nom de la variable d'environnement exportée à la fermeture.
+
+     <action>commande</action>
+            Commande shell exécutée via safe_system() lors d'un événement (clic,
+            changement...).
+
+     <input>commande</input>
+            Commande shell dont la sortie alimente le widget.
+
+     <default>valeur</default>
+            Valeur initiale du widget.
+
+
+WIDGETS —— RÉFÉRENCE COMPLÈTE
+   Fenêtre principale
+     <window>
+            Fenêtre principale du dialogue.
+            Attributs  :  title, width-request, height-request, resizable, icon-
+            name, decorated.
+
+
+   Conteneurs
+     <hbox>
+            Conteneur horizontal. Enfants alignés de gauche à droite.
+            Attributs : spacing, homogeneous.
+
+     <vbox>
+            Conteneur vertical. Enfants alignés de haut en bas.
+
+     <frame>
+            Conteneur avec bordure et titre optionnel.
+            Sous-éléments : <label> pour le titre.
+
+     <notebook>
+            Onglets. Chaque enfant direct est une page.
+            Sous-éléments : <label> pour le titre de chaque onglet.
+
+     <expander>
+            Section repliable/dépliable.
+            Sous-éléments : <label> pour le titre.
+
+     <aspectframe>
+            Conteneur maintenant le ratio largeur/hauteur de son enfant.
+            Attributs : ratio (ex: 1.333), obey-child.
+
+
+   Boutons et contrôles booléens
+     <button>
+            Bouton cliquable.
+            Formes courtes : <button ok> <button cancel> <button help>
+            Attributs : stock (icône GTK).
+
+     <checkbox>
+            Case à cocher. Exporte true ou false.
+
+     <radiobutton>
+            Bouton radio. Groupe via <variable> commune.
+
+     <togglebutton>
+            Bouton avec état enfoncé/relâché.
+
+     <switch>
+            Interrupteur on/off style mobile. Exporte true ou false.
+
+
+   Saisie de texte
+     <entry>
+            Champ de saisie mono-ligne.
+            Attributs : max-length, editable.
+
+     <password>
+            Champ de saisie masqué (●●●●). Identique à <entry> en comportement.
+
+     <searchentry>
+            Champ de recherche avec icône loupe intégrée.
+
+     <edit>
+            Zone de texte multi-lignes (éditeur).
+            Attributs : editable, wrap-mode.
+
+
+   Affichage de texte
+     <text>
+            Étiquette texte statique.
+            Sous-éléments : <label>, <input> pour texte dynamique.
+
+     <statusbar>
+            Barre d'état en bas de fenêtre.
+
+     <infobar>
+            Bandeau d'information coloré (info/warning/error).
+            Attributs : message-type (info|warning|error|question).
+
+
+   Listes et sélection
+     <combobox>
+            Liste déroulante avec saisie libre possible.
+            Sous-éléments : <item> pour chaque entrée.
+
+     <comboboxtext>
+            Liste déroulante texte seulement (plus simple).
+            Sous-éléments : <item>texte</item>.
+
+     <list>
+            Liste à défilement, sélection simple ou multiple.
+            Sous-éléments : <item>, <column-header>.
+
+     <tree>
+            Arbre hiérarchique.
+            Sous-éléments : <item> (format Parent/Enfant).
+
+     <table>
+            Grille de données tabulaires multi-colonnes.
+            Sous-éléments : <column-header>, <item>.
+
+
+   Valeurs numériques
+     <hscale>
+            Glissière horizontale.
+            Attributs : value, min, max, step.
+
+     <vscale>
+            Glissière verticale.
+
+     <spinbutton>
+            Sélecteur numérique avec boutons +/-.
+            Attributs : value, min, max, step, digits.
+
+     <levelbar>
+            Barre de niveau (lecture seule).
+            Attributs : value, min, max, mode (continuous|discrete).
+
+
+   Progression et animation
+     <progressbar>
+            Barre de progression.
+            Attributs : value (0.0-1.0), text.
+
+     <spinner>
+            Indicateur d'activité animé (roue de chargement).
+            Attributs : active (true|false).
+
+
+   Date et heure
+     <calendar>
+            Sélecteur de date graphique.
+            Exporte : VAR_DAY, VAR_MONTH, VAR_YEAR.
+
+
+   Médias et dessin
+     <pixmap>
+            Affichage d'image.
+            Sous-éléments : <filename>.
+
+     <drawingarea>
+            Zone de dessin personnalisée.
+
+     <colorbutton>
+            Sélecteur de couleur.
+            Exporte une couleur au format #RRGGBB.
+
+     <fontbutton>
+            Sélecteur de police.
+            Exporte le nom de la police sélectionnée.
+
+
+   Menus et navigation
+     <menubar>
+            Barre de menus principale.
+            Sous-éléments : <menu> puis <menuitem>.
+
+     <menuitem>
+            Entrée de menu.
+            Attributs : label, stock, accel.
+
+
+   Terminal et séparateurs
+     <terminal>
+            Terminal interactif embarqué.
+            Sous-éléments : <input> pour commande initiale.
+
+     <hseparator>
+            Séparateur horizontal.
+
+     <vseparator>
+            Séparateur vertical.
+
+
+   Contrôle du flux
+     <timer>
+            Déclencheur temporel.
+            Attributs : interval (ms), visible.
+            Sous-éléments : <action> exécutée à chaque tick.
+
+
+VARIABLES D'ENVIRONNEMENT
+     À la fermeture du dialogue (bouton OK ou EXIT), haplo-dialog exporte chaque
+     widget ayant une <variable> dans l'environnement shell :
+
+         export MON_CHAMP="valeur saisie"
+         export MA_CASE="true"
+         export MON_SLIDER="0.75"
+
+     Le script appelant récupère ces valeurs directement :
+
+         gtk3dialog --program DIALOG_VAR
+         echo "Nom saisi : $NOM"
+
+
+ACTIONS SPÉCIALES
+     Les <action> reconnaissent les mots-clés suivants :
+
+
+     EXIT:valeur
+            Ferme le dialogue et retourne valeur comme code de sortie.
+
+     REFRESH:variable
+            Rafraîchit le widget identifié par variable via sa balise <input>.
+
+     ENABLE:variable
+            Active le widget identifié par variable.
+
+     DISABLE:variable
+            Désactive le widget identifié par variable.
+
+     SHOW:variable
+            Rend visible le widget identifié par variable.
+
+     HIDE:variable
+            Cache le widget identifié par variable.
+
+     CLEAR:variable
+            Vide le contenu du widget identifié par variable.
+
+
+SÉCURITÉ
+     Les commandes dans <action> et <input> sont exécutées via safe_system() qui
+     impose une liste blanche de commandes autorisées.  Les  commandes  non  au‐
+     torisées sont rejetées avec un message d'erreur.
+
+     Ne  jamais  passer  de  données utilisateur non validées dans une <action>.
+     Voir SECURITY.md et gtk3dialog(1) pour la politique de sécurité complète.
+
+
+EXEMPLE COMPLET
+         #!/bin/sh
+         export FORMULAIRE='
+         <window title="Inscription" width-request="380" height-request="260">
+           <vbox spacing="8">
+             <frame><label>Vos informations</label>
+               <vbox>
+                 <hbox>
+                   <text><label>Nom :</label></text>
+                   <entry><variable>NOM</variable><default>Dupont</default></entry>
+                 </hbox>
+                 <hbox>
+                   <text><label>Mot de passe :</label></text>
+                   <password><variable>MDP</variable></password>
+                 </hbox>
+                 <checkbox>
+                   <label>Accepter les conditions</label>
+                   <variable>CGU</variable>
+                 </checkbox>
+               </vbox>
+             </frame>
+             <hbox>
+               <button ok></button>
+               <button cancel></button>
+             </hbox>
+           </vbox>
+         </window>'
+
+         gtk3dialog --program FORMULAIRE
+
+         if [ "$CGU" = "true" ] && [ -n "$NOM" ]; then
+             echo "Inscription de $NOM —— CGU acceptées"
+         else
+             echo "Inscription annulée ou CGU refusées"
+         fi
+
+
+VOIR AUSSI
+     gtk3dialog(1), gtkdialog(1), zenity(1), yad(1)
+
+
+HISTORIQUE
+     haplo-dialog est un portage GTK3 de gtkdialog(1) (László Pere,  2003-2013),
+     modernisé en 2026.
+
+
+AUTEURS
+     L'équipe haplo-dialog
+     devel@haplo-dialog.fr
+     Site : https://haplo-dialog.fr
+
+
+REMERCIEMENTS
+     Ce   travail   a  été  réalisé  avec  l'assistance  de  Claude  (Anthropic,
+     https://www.anthropic.com) —— mai 2026.
+
+
+LICENCE
+     Documentation sous licence CC-BY-SA 4.0.
+     Logiciel sous licence GPL-2.0-or-later.
+
+haplo-dialog 1.0.0                 29 May 2026               HAPLO-DIALOG-XML(5)

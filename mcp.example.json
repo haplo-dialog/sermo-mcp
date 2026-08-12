@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "gtk3dialog": {
+      "command": "python3",
+      "args": ["ABSOLUTE/PATH/TO/gtk3dialog-mcp/server.py"]
+    }
+  }
+}
