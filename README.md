@@ -33,7 +33,13 @@ Le pire qu'il puisse faire, c'est vous donner une réponse de documentation.
 ## Installation
 
 Clonez le dépôt, puis déclarez le serveur dans la configuration MCP de votre
-client. Exemple pour un fichier `.mcp.json` :
+client :
+
+```sh
+git clone https://gitlab.com/haplo-dialog/gtk3dialog-mcp.git
+```
+
+Exemple pour un fichier `.mcp.json` :
 
 ```json
 {
@@ -61,7 +67,8 @@ Redémarrez votre client : l'assistant dispose alors des outils ci-dessous.
 ## Signaler un bug, proposer une idée
 
 Ce compagnon ne publie rien lui-même. Pour remonter un bug ou une idée
-d'amélioration, ouvrez une **issue** sur le dépôt GitLab de gtk3dialog, en
+d'amélioration, ouvrez une **issue** sur le dépôt GitLab de gtk3dialog
+(<https://gitlab.com/haplo-dialog/gtk3dialog/-/issues>), en
 indiquant la version, un script XML minimal qui reproduit le cas, et le
 comportement attendu vs observé.
 

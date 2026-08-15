@@ -32,7 +32,9 @@ EXAMPLE = _load(os.path.join("examples", "formulaire.xml"))
 
 REPORT = (
     "Pour signaler un bug ou proposer une amélioration de gtk3dialog, ouvrez une "
-    "« issue » sur le dépôt GitLab du projet. Décrivez :\n"
+    "« issue » sur le dépôt GitLab du projet :\n"
+    "  https://gitlab.com/haplo-dialog/gtk3dialog/-/issues\n"
+    "Décrivez :\n"
     "  1. la version (sortie de `gtk3dialog --version`) ;\n"
     "  2. le script XML minimal qui reproduit le problème ;\n"
     "  3. le comportement attendu et le comportement observé.\n"
