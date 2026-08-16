@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="gtk3dialog-mcp">
+  <title>gtk3dialog-mcp — la documentation ouverte, à portée de l'assistant</title>
+  <!-- SPDX-License-Identifier: GPL-2.0-or-later -->
+  <!-- Décliné du logo haplo-dialog : même dégradé, même trait monoligne 3.5,
+       mêmes arrondis. La fenêtre y devient un livre ouvert. -->
+  <desc>Livre ouvert monoligne, dégradé bleu-mauve-vert d'eau, sur fond transparent.</desc>
+  <defs>
+    <linearGradient id="haplo-mcp-g" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#89b4fa"/>
+      <stop offset=".55" stop-color="#cba6f7"/>
+      <stop offset="1" stop-color="#94e2d5"/>
+    </linearGradient>
+  </defs>
+  <!-- Livre ouvert = la référence consultable (monoline, même trait que la fenêtre) -->
+  <g fill="none" stroke="url(#haplo-mcp-g)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- page de gauche -->
+    <path d="M32 21C26.5 16.5 18 15.5 10.5 17.5V43C18 41 26.5 42 32 46.5"/>
+    <!-- page de droite -->
+    <path d="M32 21C37.5 16.5 46 15.5 53.5 17.5V43C46 41 37.5 42 32 46.5"/>
+    <!-- reliure -->
+    <path d="M32 21V46.5"/>
+    <!-- deux lignes de texte par page -->
+    <path d="M16.5 26.5C19.5 26.1 22.5 26.3 25.5 27"/>
+    <path d="M38.5 27C41.5 26.3 44.5 26.1 47.5 26.5"/>
+    <path d="M16.5 34C19.5 33.6 22.5 33.8 25.5 34.5"/>
+    <path d="M38.5 34.5C41.5 33.8 44.5 33.6 47.5 34"/>
+  </g>
+</svg>
