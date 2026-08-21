@@ -6,7 +6,7 @@ NOM
 DESCRIPTION
      haplo-dialog  lit  une description d'interface graphique écrite dans un di‐
      alecte XML et affiche la fenêtre correspondante. Cette  page  documente  la
-     syntaxe XML lue par la commande gtk3dialog(1), également accessible sous le
+     syntaxe XML lue par la commande gtk3sermo(1), également accessible sous le
      nom gtkdialog(1).
 
      La  syntaxe est héritée de gtkdialog 0.8.3 (László Pere, 2003-2013) et por‐
@@ -256,7 +256,7 @@ VARIABLES D'ENVIRONNEMENT
 
      Le script appelant récupère ces valeurs directement :
 
-         gtk3dialog --program DIALOG_VAR
+         gtk3sermo --program DIALOG_VAR
          echo "Nom saisi : $NOM"
 
 
@@ -292,7 +292,7 @@ SÉCURITÉ
      torisées sont rejetées avec un message d'erreur.
 
      Ne  jamais  passer  de  données utilisateur non validées dans une <action>.
-     Voir SECURITY.md et gtk3dialog(1) pour la politique de sécurité complète.
+     Voir SECURITY.md et gtk3sermo(1) pour la politique de sécurité complète.
 
 
 EXEMPLE COMPLET
@@ -323,7 +323,7 @@ EXEMPLE COMPLET
            </vbox>
          </window>'
 
-         gtk3dialog --program FORMULAIRE
+         gtk3sermo --program FORMULAIRE
 
          if [ "$CGU" = "true" ] && [ -n "$NOM" ]; then
              echo "Inscription de $NOM —— CGU acceptées"
@@ -333,7 +333,7 @@ EXEMPLE COMPLET
 
 
 VOIR AUSSI
-     gtk3dialog(1), gtkdialog(1), zenity(1), yad(1)
+     gtk3sermo(1), gtkdialog(1), zenity(1), yad(1)
 
 
 HISTORIQUE

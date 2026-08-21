@@ -1,8 +1,8 @@
 {
   "mcpServers": {
-    "gtk3dialog": {
+    "gtk3sermo": {
       "command": "python3",
-      "args": ["ABSOLUTE/PATH/TO/gtk3dialog-mcp/server.py"]
+      "args": ["ABSOLUTE/PATH/TO/gtk3sermo-mcp/server.py"]
     }
   }
 }

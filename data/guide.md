@@ -15,11 +15,11 @@ export MAIN_DIALOG='
   </vbox>
 </window>'
 
-gtk3dialog --program MAIN_DIALOG
+gtk3sermo --program MAIN_DIALOG
 echo "Bonjour, $NOM !"
 ```
 
-Ce script fonctionne **tel quel**, que vous l'appeliez avec `gtk3dialog` ou avec
+Ce script fonctionne **tel quel**, que vous l'appeliez avec `gtk3sermo` ou avec
 `gtkdialog` : c'est le **même binaire** (voir plus bas). Les scripts écrits pour
 gtkdialog tournent sans modification.
 
@@ -28,25 +28,34 @@ gtkdialog tournent sans modification.
 ## Installation rapide
 
 ```sh
-# Debian / Ubuntu / Haplo-Linux
-sudo apt install gtk3dialog
-
-# Depuis les sources
-cd gtk3dialog/gtk3dialog_1.0.0
-./configure && make && sudo make install
+# Depuis les sources (seule voie disponible aujourd'hui)
+cd gtk3sermo/gtk3sermo_1.0.0
+./autogen.sh && ./configure && make && sudo make install
 ```
 
-Le paquet installe la commande `gtk3dialog` et **fournit `gtkdialog`** (lien
-symbolique) : les deux noms lancent le même programme.
+⚠️ **Il n'existe pas encore de dépôt APT public** : `apt install` ne fonctionne pas.
+Les paquets `.deb` se construisent depuis les sources avec `dpkg-buildpackage -b`.
+
+**Trois paquets, et la distinction compte :**
+
+| Paquet | Commande installée | Conflits |
+|---|---|---|
+| `gtk3sermo` | `gtk3sermo` | aucun |
+| `gtk4sermo` | `gtk4sermo` | aucun |
+| `gtksermo` | `gtkdialog` | avec tout ce qui possède `/usr/bin/gtkdialog` |
+
+Le nom `gtkdialog` n'est **PAS** fourni par `gtk3sermo`. Il vit dans le paquet
+`gtksermo`, à installer séparément — ce qui permet d'avoir `gtk3sermo` à côté d'une
+autre implémentation de gtkdialog sans conflit.
 
 ---
 
-## gtk3dialog, le successeur de gtkdialog
+## gtk3sermo, le successeur de gtkdialog
 
 haplo-dialog reprend **gtkdialog 0.8.3** (László Pere, GPL-2.0+), resté sur
 GTK2, et le modernise sur **GTK3** en gardant sa syntaxe XML **à l'identique**.
 
-- **Un seul binaire, deux noms.** `gtkdialog` est un lien vers `gtk3dialog`. La
+- **Un seul binaire, deux noms.** `gtkdialog` est un lien vers `gtk3sermo`. La
   même fenêtre, décrite une seule fois en XML, s'ouvre à l'identique par les deux
   commandes — vos anciens scripts gtkdialog fonctionnent sans y toucher.
 - **Même langage XML.** Les descriptions de fenêtres gtkdialog sont lues telles
@@ -103,7 +112,7 @@ export DIALOG='
   </vbox>
 </window>'
 
-gtk3dialog --program DIALOG
+gtk3sermo --program DIALOG
 
 if [ -n "$USER_INPUT" ]; then
     echo "Connexion de : $USER_INPUT"
@@ -122,7 +131,10 @@ fi
 `<timer>` `<infobar>` `<levelbar>` `<spinner>` `<searchentry>`  
 `<drawingarea>` `<aspectframe>` `<togglebutton>` et plus…
 
-Référence complète : `man 5 haplo-dialog-xml` ou `doc/reference/`
+Référence complète : le fichier `man/haplo-dialog-xml.5` du dépôt, ou la
+ressource `reference-xml` de ce serveur MCP.
+⚠️ `man 5 haplo-dialog-xml` ne fonctionne PAS : cette page n'est pas installée
+par les paquets, elle vit seulement dans le dépôt source.
 
 ---
 
@@ -138,8 +150,8 @@ haplo-dialog/
 ├── SECURITY.md             ← politique de sécurité
 ├── LICENCES.md             ← résumé des licences
 ├── ROADMAP.md              ← feuille de route
-├── gtk3dialog/             ← le port GTK3
-│   └── gtk3dialog_1.0.0/
+├── gtk3sermo/             ← le port GTK3
+│   └── gtk3sermo_1.0.0/
 │       ├── src/            ← sources C
 │       ├── examples/       ← scripts de démonstration
 │       ├── doc/            ← documentation Texinfo
@@ -161,7 +173,7 @@ haplo-dialog est conçu pour tourner en contexte utilisateur non privilégié.
   repli sur `/bin/sh -c` (fonctionnalité shell complète) ; ce repli peut être
   **refusé** en posant la variable `HAPLO_NO_SHELL_FALLBACK`.
 - Binaires compilés avec : `FORTIFY_SOURCE`, PIE, Full RELRO, pile non
-  exécutable (NX), stack canary — vérifiable via `checksec --file=/usr/bin/gtk3dialog`.
+  exécutable (NX), stack canary — vérifiable via `checksec --file=/usr/bin/gtk3sermo`.
 - Politique de sécurité complète : [SECURITY.md](SECURITY.md)
 - Signalement de vulnérabilité : `devel@haplo-dialog.fr`
 

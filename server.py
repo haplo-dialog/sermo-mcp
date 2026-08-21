@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-2.0-or-later
-# gtk3dialog-mcp — serveur MCP LOCAL (stdio) exposant la documentation publique
-# de gtk3dialog / gtkdialog à un assistant IA.
+# gtk3sermo-mcp — serveur MCP LOCAL (stdio) exposant la documentation publique
+# de gtk3sermo / gtkdialog à un assistant IA.
 #
 # Principes (ADR-0015, niveau 1) :
 #   - transport stdio uniquement : aucun port, aucun accès réseau (entrant ni
@@ -31,11 +31,11 @@ GUIDE = _load("guide.md")
 EXAMPLE = _load(os.path.join("examples", "formulaire.xml"))
 
 REPORT = (
-    "Pour signaler un bug ou proposer une amélioration de gtk3dialog, ouvrez une "
+    "Pour signaler un bug ou proposer une amélioration de gtk3sermo, ouvrez une "
     "« issue » sur le dépôt GitLab du projet :\n"
-    "  https://gitlab.com/haplo-dialog/gtk3dialog/-/issues\n"
+    "  https://gitlab.com/haplo-dialog/gtk3sermo/-/issues\n"
     "Décrivez :\n"
-    "  1. la version (sortie de `gtk3dialog --version`) ;\n"
+    "  1. la version (sortie de `gtk3sermo --version`) ;\n"
     "  2. le script XML minimal qui reproduit le problème ;\n"
     "  3. le comportement attendu et le comportement observé.\n"
     "Ce serveur ne publie rien lui-même : il vous aide seulement à préparer un "
@@ -44,19 +44,19 @@ REPORT = (
 
 TOOLS = [
     {
-        "name": "gtk3dialog_reference",
-        "description": "Référence complète de la syntaxe XML de gtk3dialog / "
+        "name": "gtk3sermo_reference",
+        "description": "Référence complète de la syntaxe XML de gtk3sermo / "
                        "gtkdialog (widgets, attributs communs, sous-éléments).",
         "inputSchema": {"type": "object", "properties": {}},
     },
     {
-        "name": "gtk3dialog_guide",
+        "name": "gtk3sermo_guide",
         "description": "Guide de prise en main : installation, compatibilité "
                        "gtkdialog, exemples, sécurité, licences.",
         "inputSchema": {"type": "object", "properties": {}},
     },
     {
-        "name": "gtk3dialog_search",
+        "name": "gtk3sermo_search",
         "description": "Recherche plein texte dans la documentation (référence + "
                        "guide). Renvoie les passages pertinents avec leur contexte.",
         "inputSchema": {
@@ -67,13 +67,13 @@ TOOLS = [
         },
     },
     {
-        "name": "gtk3dialog_example",
+        "name": "gtk3sermo_example",
         "description": "Un exemple complet et fonctionnel de dialogue "
                        "(formulaire de saisie).",
         "inputSchema": {"type": "object", "properties": {}},
     },
     {
-        "name": "gtk3dialog_how_to_report",
+        "name": "gtk3sermo_how_to_report",
         "description": "Comment signaler un bug ou proposer une amélioration "
                        "(via les issues GitLab du projet).",
         "inputSchema": {"type": "object", "properties": {}},
@@ -98,15 +98,15 @@ def _search(query):
 
 
 def _call_tool(name, args):
-    if name == "gtk3dialog_reference":
+    if name == "gtk3sermo_reference":
         return REFERENCE or "(référence indisponible)"
-    if name == "gtk3dialog_guide":
+    if name == "gtk3sermo_guide":
         return GUIDE or "(guide indisponible)"
-    if name == "gtk3dialog_example":
+    if name == "gtk3sermo_example":
         return EXAMPLE or "(exemple indisponible)"
-    if name == "gtk3dialog_how_to_report":
+    if name == "gtk3sermo_how_to_report":
         return REPORT
-    if name == "gtk3dialog_search":
+    if name == "gtk3sermo_search":
         return _search(str(args.get("query", "")))
     raise ValueError("outil inconnu : %s" % name)
 
@@ -139,7 +139,7 @@ def main():
             _respond(rid, {
                 "protocolVersion": "2024-11-05",
                 "capabilities": {"tools": {}},
-                "serverInfo": {"name": "gtk3dialog-mcp", "version": "1.0.0"},
+                "serverInfo": {"name": "gtk3sermo-mcp", "version": "1.0.0"},
             })
         elif method == "notifications/initialized":
             pass  # notification : aucune réponse attendue
