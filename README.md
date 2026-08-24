@@ -1,4 +1,4 @@
-# gtk3sermo-mcp
+# sermo-mcp
 
 **Un compagnon de documentation pour développer avec gtk3sermo, à côté de votre
 assistant IA.**
@@ -36,7 +36,7 @@ Clonez le dépôt, puis déclarez le serveur dans la configuration MCP de votre
 client :
 
 ```sh
-git clone https://gitlab.com/haplo-dialog/gtk3sermo-mcp.git
+git clone https://gitlab.com/haplo-dialog/sermo-mcp.git
 ```
 
 Exemple pour un fichier `.mcp.json` :
@@ -46,7 +46,7 @@ Exemple pour un fichier `.mcp.json` :
   "mcpServers": {
     "gtk3sermo": {
       "command": "python3",
-      "args": ["/chemin/vers/gtk3sermo-mcp/server.py"]
+      "args": ["/chemin/vers/sermo-mcp/server.py"]
     }
   }
 }
@@ -68,7 +68,7 @@ Redémarrez votre client : l'assistant dispose alors des outils ci-dessous.
 
 Ce compagnon ne publie rien lui-même. Pour remonter un bug ou une idée
 d'amélioration, ouvrez une **issue** sur le dépôt GitLab de gtk3sermo
-(<https://gitlab.com/haplo-dialog/gtk3sermo/-/issues>), en
+(<https://gitlab.com/haplo-dialog/sermo/-/issues>), en
 indiquant la version, un script XML minimal qui reproduit le cas, et le
 comportement attendu vs observé.
 

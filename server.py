@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-2.0-or-later
-# gtk3sermo-mcp — serveur MCP LOCAL (stdio) exposant la documentation publique
+# sermo-mcp — serveur MCP LOCAL (stdio) exposant la documentation publique
 # de gtk3sermo / gtkdialog à un assistant IA.
 #
 # Principes (ADR-0015, niveau 1) :
@@ -33,7 +33,7 @@ EXAMPLE = _load(os.path.join("examples", "formulaire.xml"))
 REPORT = (
     "Pour signaler un bug ou proposer une amélioration de gtk3sermo, ouvrez une "
     "« issue » sur le dépôt GitLab du projet :\n"
-    "  https://gitlab.com/haplo-dialog/gtk3sermo/-/issues\n"
+    "  https://gitlab.com/haplo-dialog/sermo/-/issues\n"
     "Décrivez :\n"
     "  1. la version (sortie de `gtk3sermo --version`) ;\n"
     "  2. le script XML minimal qui reproduit le problème ;\n"
@@ -139,7 +139,7 @@ def main():
             _respond(rid, {
                 "protocolVersion": "2024-11-05",
                 "capabilities": {"tools": {}},
-                "serverInfo": {"name": "gtk3sermo-mcp", "version": "1.0.0"},
+                "serverInfo": {"name": "sermo-mcp", "version": "1.0.0"},
             })
         elif method == "notifications/initialized":
             pass  # notification : aucune réponse attendue
