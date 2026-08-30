@@ -111,17 +111,24 @@ WIDGETS —— RÉFÉRENCE COMPLÈTE
      <vbox>
             Conteneur vertical. Enfants alignés de haut en bas.
 
-     <frame>
-            Conteneur avec bordure et titre optionnel.
-            Sous-éléments : <label> pour le titre.
+     <frame> ou <frame Titre>
+            Conteneur avec bordure et titre optionnel. Le titre s'écrit en
+            POSITIONNEL — <frame Identifiants> — ou en attribut,
+            <frame label="Identifiants">.
+            ⚠ <frame><label>Titre</label> est une ERREUR DE SYNTAXE : le
+            programme s'arrête avec « near token '<label>' ». Mesuré.
 
      <notebook>
             Onglets. Chaque enfant direct est une page.
-            Sous-éléments : <label> pour le titre de chaque onglet.
+            Attributs : labels (titres séparés par « | »), show-tabs,
+            show-border. Exemple : <notebook labels="Général|Avancé">.
+            ⚠ <notebook><label>…</label> est une ERREUR DE SYNTAXE. Mesuré.
 
      <expander>
             Section repliable/dépliable.
-            Sous-éléments : <label> pour le titre.
+            Attributs : label (le titre), expanded, use-underline.
+            ⚠ Ni <expander><label>…</label> ni <expander Titre> ne passent
+            l'analyseur. Seul label="Titre" fonctionne. Mesuré.
 
      <aspectframe>
             Conteneur maintenant le ratio largeur/hauteur de son enfant.
@@ -220,8 +227,17 @@ WIDGETS —— RÉFÉRENCE COMPLÈTE
             Sous-éléments : <item> (format Parent/Enfant).
 
      <table>
-            Grille de données tabulaires multi-colonnes.
-            Sous-éléments : <column-header>, <item>.
+            Grille de données tabulaires multi-colonnes. Les en-têtes sont un
+            <label> unique, colonnes séparées par « | » ; chaque ligne est un
+            <item> au même format :
+
+                <table>
+                  <label>Nom|Taille</label>
+                  <item>fichier.txt|12 ko</item>
+                  <variable>SEL</variable>
+                </table>
+
+            ⚠ <column-header> est une ERREUR DE SYNTAXE.
 
 
      <comboboxentry>
@@ -268,8 +284,17 @@ WIDGETS —— RÉFÉRENCE COMPLÈTE
 
    Médias et dessin
      <pixmap>
-            Affichage d'image.
-            Sous-éléments : <filename>.
+            Affichage d'image. Le chemin est le CONTENU d'un <input>, et
+            « file » est un attribut NU, sans valeur :
+
+                <pixmap><input file>/chemin/image.svg</input></pixmap>
+
+            Icône du thème, forme « stock » :
+
+                <pixmap><input file stock="gtk-info"></input></pixmap>
+
+            ⚠ <pixmap><filename>…</filename> est une ERREUR DE SYNTAXE.
+            Pour une image dont on veut fixer la taille, voir <image>.
 
      <drawingarea>
             Zone de dessin personnalisée.
@@ -428,7 +453,7 @@ EXEMPLE COMPLET
          export FORMULAIRE='
          <window title="Inscription" width-request="380" height-request="260">
            <vbox spacing="8">
-             <frame><label>Vos informations</label>
+             <frame Vos informations>
                <vbox>
                  <hbox>
                    <text><label>Nom :</label></text>

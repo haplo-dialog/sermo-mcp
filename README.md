@@ -64,6 +64,26 @@ Redémarrez votre client : l'assistant dispose alors des outils ci-dessous.
 | `gtk3sermo_example` | Un exemple complet de dialogue. |
 | `gtk3sermo_how_to_report` | Comment signaler un bug ou proposer une amélioration. |
 
+## Vérifier que la documentation servie est juste
+
+```sh
+./tests/verifie-exemples.sh
+```
+
+Ce banc extrait **chaque** bout de XML de `data/guide.md` et
+`data/reference-xml.txt`, et le rejoue contre `gtk3sermo` et `gtk4sermo` réels
+avec `--print-ir`. Il échoue si un seul exemple n'est pas analysable.
+
+Il existe parce que le 2026-08-30, **six** formes documentées étaient des
+erreurs de syntaxe — `<frame><label>`, `<notebook><label>`,
+`<expander><label>`, `<pixmap><filename>`, `<table><column-header>` — et
+l'exemple phare du guide ne démarrait pas. Rien ne rejouait la documentation,
+donc personne ne l'avait vu.
+
+Codes de retour : `0` tout passe · `1` un exemple casse, **ou** rien n'a été
+extrait · `77` les binaires ne sont pas installés, rien n'a été vérifié. Un
+banc muet ne rend jamais 0.
+
 ## Signaler un bug, proposer une idée
 
 Ce compagnon ne publie rien lui-même. Pour remonter un bug ou une idée
