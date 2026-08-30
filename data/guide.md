@@ -29,7 +29,7 @@ gtkdialog tournent sans modification.
 
 ```sh
 # Depuis les sources (seule voie disponible aujourd'hui)
-cd gtk3sermo/gtk3sermo_1.0.0
+cd gtk3sermo/gtk3sermo_1.1.3        # ou gtk4sermo/gtk4sermo_1.1.3
 ./autogen.sh && ./configure && make && sudo make install
 ```
 
@@ -150,12 +150,14 @@ haplo-dialog/
 ├── SECURITY.md             ← politique de sécurité
 ├── LICENCES.md             ← résumé des licences
 ├── ROADMAP.md              ← feuille de route
-├── gtk3sermo/             ← le port GTK3
-│   └── gtk3sermo_1.0.0/
+├── gtk3sermo/             ← le port GTK 3 (port de référence)
+│   └── gtk3sermo_1.1.3/
 │       ├── src/            ← sources C
 │       ├── examples/       ← scripts de démonstration
 │       ├── doc/            ← documentation Texinfo
 │       └── packaging/      ← .deb, .rpm, PKGBUILD, .ebuild
+├── gtk4sermo/             ← le port GTK 4 : même syntaxe, plus <flowbox>,
+│   └── gtk4sermo_1.1.3/      <overlay>, <revealer> et <stack>
 └── tests/
     └── xml/                ← suite de régression XML
 ```
@@ -172,6 +174,14 @@ haplo-dialog est conçu pour tourner en contexte utilisateur non privilégié.
   l'injection shell dans ce cas courant. En présence de métacaractères, il y a
   repli sur `/bin/sh -c` (fonctionnalité shell complète) ; ce repli peut être
   **refusé** en posant la variable `HAPLO_NO_SHELL_FALLBACK`.
+- ⚠️ **Il n'y a AUCUNE liste blanche de commandes par défaut.** Le filtre existe
+  mais reste éteint tant que `HAPLO_ALLOWED_CMDS` n'est pas posée : sans elle,
+  `_allowlist_permits()` rend `TRUE` sans rien vérifier. La poser
+  (`HAPLO_ALLOWED_CMDS=cat,grep,…`) filtre sur le `basename` de `argv[0]` **et**
+  refuse tout repli `/bin/sh -c`.
+- La valeur d'un widget vient de la personne qui **se sert** du dialogue : ne
+  jamais la passer à `eval` ni la concaténer dans une `<action>`. La voie sûre
+  est `--do`.
 - Binaires compilés avec : `FORTIFY_SOURCE`, PIE, Full RELRO, pile non
   exécutable (NX), stack canary — vérifiable via `checksec --file=/usr/bin/gtk3sermo`.
 - Politique de sécurité complète : [SECURITY.md](SECURITY.md)

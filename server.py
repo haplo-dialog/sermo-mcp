@@ -34,6 +34,8 @@ REPORT = (
     "Pour signaler un bug ou proposer une amélioration de gtk3sermo, ouvrez une "
     "« issue » sur le dépôt GitLab du projet :\n"
     "  https://gitlab.com/haplo-dialog/sermo/-/issues\n"
+    "Le suivi des tickets demande un compte GitLab. Sans compte, le même "
+    "rapport est le bienvenu par courriel à devel@haplo-dialog.fr.\n"
     "Décrivez :\n"
     "  1. la version (sortie de `gtk3sermo --version`) ;\n"
     "  2. le script XML minimal qui reproduit le problème ;\n"

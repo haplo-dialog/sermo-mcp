@@ -4,13 +4,21 @@ NOM
      haplo-dialog-xml - syntaxe XML des dialogues haplo-dialog
 
 DESCRIPTION
-     haplo-dialog  lit  une description d'interface graphique écrite dans un di‐
-     alecte XML et affiche la fenêtre correspondante. Cette  page  documente  la
-     syntaxe XML lue par la commande gtk3sermo(1), également accessible sous le
-     nom gtkdialog(1).
+     haplo-dialog lit une description d'interface graphique écrite dans un
+     dialecte XML et affiche la fenêtre correspondante.
 
-     La  syntaxe est héritée de gtkdialog 0.8.3 (László Pere, 2003-2013) et por‐
-     tée sur GTK3.
+     DEUX PORTS lisent cette syntaxe :
+
+          gtk3sermo(1)  port GTK 3, port de référence. Également accessible
+                        sous le nom gtkdialog(1), via le paquet gtksermo.
+
+          gtk4sermo(1)  port GTK 4. Même syntaxe, plus quatre widgets qui
+                        n'existent qu'ici : <flowbox>, <overlay>, <revealer>
+                        et <stack>.
+
+     Sauf mention contraire, tout ce qui suit vaut pour les deux ports.
+
+     La syntaxe est héritée de gtkdialog 0.8.3 (László Pere, 2003-2013).
 
 
 STRUCTURE GÉNÉRALE
@@ -63,6 +71,29 @@ SOUS-ÉLÉMENTS COMMUNS
      <default>valeur</default>
             Valeur initiale du widget.
 
+     <item>texte</item>
+            Une entrée d'une liste : <combobox>, <comboboxtext>,
+            <comboboxentry>, <list>. Répéter la balise pour chaque entrée.
+
+     <output>NOM</output>
+            Destination de la valeur, en plus de la variable d'environnement.
+
+     <output file="chemin">
+            Écrit la valeur dans un fichier. ⚠ Le fichier est TRONQUÉ à
+            l'ouverture : si le widget ne rend rien, le contenu précédent est
+            perdu. C'est ce qui arrivait à <filechooser> dans le port GTK 4
+            avant la version 1.1.2.
+
+     <width>N</width> et <height>N</height>
+            Taille en pixels, forme sous-élément des attributs width-request
+            et height-request.
+
+     <radio>...</radio>
+            Synonyme exact de <radiobutton>, hérité de gtkdialog.
+
+     <separator/>
+            Synonyme exact de <menuitemseparator>, hérité de gtkdialog.
+
 
 WIDGETS —— RÉFÉRENCE COMPLÈTE
    Fenêtre principale
@@ -97,6 +128,28 @@ WIDGETS —— RÉFÉRENCE COMPLÈTE
             Attributs : ratio (ex: 1.333), obey-child.
 
 
+     <eventbox>
+            Conteneur invisible qui capte les événements de souris pour un
+            enfant qui n'en reçoit pas lui-même.
+
+     <flowbox>                                      [port GTK 4 uniquement]
+            Grille flexible qui redistribue ses enfants selon la largeur.
+            Attributs : column-spacing, row-spacing, min-children-per-line,
+            max-children-per-line, selection-mode.
+
+     <overlay>                                      [port GTK 4 uniquement]
+            Superpose des widgets par-dessus un enfant principal. Le premier
+            enfant est le fond, les suivants sont posés dessus.
+
+     <revealer>                                     [port GTK 4 uniquement]
+            Affiche ou cache son enfant avec une animation.
+            Attributs : reveal, transition, duration.
+
+     <stack>                                        [port GTK 4 uniquement]
+            Conteneur multi-pages : une seule page visible à la fois, avec
+            transition animée.
+            Attributs : transition.
+
    Boutons et contrôles booléens
      <button>
             Bouton cliquable.
@@ -115,6 +168,10 @@ WIDGETS —— RÉFÉRENCE COMPLÈTE
      <switch>
             Interrupteur on/off style mobile. Exporte true ou false.
 
+
+     <linkbutton>
+            Bouton qui ouvre une URL dans le navigateur par défaut.
+            Sous-éléments : <label> pour le texte, <input> pour l'URI.
 
    Saisie de texte
      <entry>
@@ -167,6 +224,10 @@ WIDGETS —— RÉFÉRENCE COMPLÈTE
             Sous-éléments : <column-header>, <item>.
 
 
+     <comboboxentry>
+            Liste déroulante dont le champ est ÉDITABLE : l'utilisateur peut
+            saisir une valeur absente de la liste. Nom hérité de gtkdialog.
+
    Valeurs numériques
      <hscale>
             Glissière horizontale.
@@ -194,6 +255,11 @@ WIDGETS —— RÉFÉRENCE COMPLÈTE
             Attributs : active (true|false).
 
 
+     <pulse>
+            Barre de progression en mode indéterminé : elle bat sans connaître
+            l'avancement. Pour une progression chiffrée, voir <progressbar>.
+            Attributs : text, show-text.
+
    Date et heure
      <calendar>
             Sélecteur de date graphique.
@@ -217,6 +283,11 @@ WIDGETS —— RÉFÉRENCE COMPLÈTE
             Exporte le nom de la police sélectionnée.
 
 
+     <image>
+            Image affichée depuis un fichier ou depuis le thème d'icônes.
+            Attributs : file, icon-name, icon-size, width, height.
+            Contrairement à <pixmap>, accepte une taille explicite.
+
    Menus et navigation
      <menubar>
             Barre de menus principale.
@@ -226,6 +297,14 @@ WIDGETS —— RÉFÉRENCE COMPLÈTE
             Entrée de menu.
             Attributs : label, stock, accel.
 
+
+     <menu>
+            Menu déroulant d'un <menubar>. Contient des <menuitem> et des
+            <menuitemseparator>.
+            Sous-éléments : <label> pour le titre du menu.
+
+     <menuitemseparator>
+            Ligne de séparation entre deux entrées d'un <menu>.
 
    Terminal et séparateurs
      <terminal>
@@ -239,6 +318,24 @@ WIDGETS —— RÉFÉRENCE COMPLÈTE
             Séparateur vertical.
 
 
+     <gvim>
+            Embarque une fenêtre gvim dans le dialogue, via GtkSocket.
+            ⚠ Port GTK 3 uniquement. GtkSocket a été supprimé de GTK 4 : le
+            port GTK 4 affiche à la place une étiquette qui le dit, et écrit un
+            message sur la sortie d'erreur. Il ne fait pas semblant.
+
+   Choix de fichier
+     <filechooser>
+            Bouton qui ouvre un sélecteur de fichier. La valeur exportée est le
+            chemin choisi.
+            Attributs : action (open, save, select-folder, create-folder).
+            ⚠ Dans le port GTK 4, ce widget ne fonctionne qu'à partir de la
+            version 1.1.2 : avant, c'était un bouton ordinaire qui ne
+            choisissait rien et vidait le fichier de <output>.
+
+     <chooser>
+            Sélecteur de fichier hérité de gtkdialog, nettement plus limité que
+            <filechooser>. Conservé pour la compatibilité des vieux scripts.
    Contrôle du flux
      <timer>
             Déclencheur temporel.
@@ -287,13 +384,44 @@ ACTIONS SPÉCIALES
 
 
 SÉCURITÉ
-     Les commandes dans <action> et <input> sont exécutées via safe_system() qui
-     impose une liste blanche de commandes autorisées.  Les  commandes  non  au‐
-     torisées sont rejetées avec un message d'erreur.
+     MODÈLE DE CONFIANCE
+            Le script XML vient de l'auteur du dialogue, qui a déjà le droit de
+            lancer des commandes. Ce n'est PAS un bac à sable : une <action> ou
+            un <input> exécute ce qu'on y écrit.
 
-     Ne  jamais  passer  de  données utilisateur non validées dans une <action>.
-     Voir SECURITY.md et gtk3sermo(1) pour la politique de sécurité complète.
+     COMMENT safe_system() EXÉCUTE
+            Si la commande ne contient AUCUN métacaractère shell, elle est
+            lancée directement par exec(), sans shell — l'injection est alors
+            impossible. Si elle en contient un seul, il y a repli sur
+            /bin/sh -c, qui rend la pleine puissance du shell ET la pleine
+            surface d'injection.
 
+            Les métacaractères qui déclenchent le repli sont exactement :
+                | & ; < > ( ) { } $ ` \ " ' ~ * ?
+
+     IL N'Y A AUCUNE LISTE BLANCHE PAR DÉFAUT
+            Une version antérieure de cette page affirmait que safe_system()
+            « impose une liste blanche de commandes autorisées ». C'ÉTAIT FAUX.
+            Le filtre existe, mais il est éteint tant qu'on ne l'allume pas :
+            _allowlist_permits() lit HAPLO_ALLOWED_CMDS et, si la variable est
+            absente ou vide, rend TRUE — le code dit « liste absente : aucune
+            restriction ».
+
+     LES DEUX VERROUS, À POSER SOI-MÊME
+            HAPLO_ALLOWED_CMDS=cmd1,cmd2,...
+                   Allume la liste blanche. Le filtre porte sur le basename de
+                   argv[0]. Tant que la variable est posée, le repli
+                   /bin/sh -c est REFUSÉ, pas seulement filtré.
+
+            HAPLO_NO_SHELL_FALLBACK=1
+                   Refuse le repli /bin/sh -c, sans restreindre les commandes.
+
+     LA VALEUR D'UN WIDGET N'EST PAS DE CONFIANCE
+            Elle vient de la personne qui SE SERT du dialogue. Ne jamais la
+            passer à eval, ni la concaténer dans une <action>. Pour agir sur
+            une valeur, la voie sûre est --do.
+
+     Voir SECURITY.md et gtk3sermo(1) pour la politique complète.
 
 EXEMPLE COMPLET
          #!/bin/sh
@@ -333,12 +461,17 @@ EXEMPLE COMPLET
 
 
 VOIR AUSSI
-     gtk3sermo(1), gtkdialog(1), zenity(1), yad(1)
+     gtk3sermo(1), gtk4sermo(1), gtkdialog(1), zenity(1), yad(1)
 
 
 HISTORIQUE
-     haplo-dialog est un portage GTK3 de gtkdialog(1) (László Pere,  2003-2013),
-     modernisé en 2026.
+     haplo-dialog descend de gtkdialog(1) (László Pere, 2003-2013), corrigé et
+     durci en 2026. Le port GTK 3 est arrivé le premier ; le port GTK 4 l'a
+     rejoint et lit la même syntaxe.
+
+     Cette page décrit la version 1.1.3. Les versions antérieures plantent
+     quand on ferme un <infobar> ; celles antérieures à la 1.1.2 rendent une
+     valeur fausse pour <checkbox> et <radiobutton> dans le port GTK 4.
 
 
 AUTEURS
@@ -356,4 +489,4 @@ LICENCE
      Documentation sous licence CC-BY-SA 4.0.
      Logiciel sous licence GPL-2.0-or-later.
 
-haplo-dialog 1.0.0                 29 May 2026               HAPLO-DIALOG-XML(5)
+haplo-dialog 1.1.3                 2026-08-29               HAPLO-DIALOG-XML(5)
