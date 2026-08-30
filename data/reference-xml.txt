@@ -120,8 +120,9 @@ WIDGETS —— RÉFÉRENCE COMPLÈTE
 
      <notebook>
             Onglets. Chaque enfant direct est une page.
-            Attributs : labels (titres séparés par « | »), show-tabs,
-            show-border. Exemple : <notebook labels="Général|Avancé">.
+            Attributs : tab-labels (titres séparés par « | »), show-tabs,
+            show-border. Exemple : <notebook tab-labels="Général|Avancé">.
+            « labels » est accepté mais DÉPRÉCIÉ (widget_notebook.c:94-95).
             ⚠ <notebook><label>…</label> est une ERREUR DE SYNTAXE. Mesuré.
 
      <expander>

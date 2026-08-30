@@ -174,7 +174,7 @@ erreur de syntaxe. Chaque ligne a été rejouée sur `gtk3sermo 1.1.3`.
 | On écrit spontanément | Résultat | La forme qui marche |
 |---|---|---|
 | `<frame><label>Titre</label>` | `near token '<label>'` | `<frame Titre>` ou `<frame label="Titre">` |
-| `<notebook><label>a</label>` | `near token '<label>'` | `<notebook labels="a\|b">` |
+| `<notebook><label>a</label>` | `near token '<label>'` | `<notebook tab-labels="a\|b">` |
 | `<expander><label>Titre</label>` | `near token '<label>'` | `<expander label="Titre">` |
 | `<pixmap><filename>x.png</filename>` | `near token '<filename>'` | `<pixmap><input file>x.png</input></pixmap>` |
 | `<table><column-header>c</column-header>` | `near token '<column-header>'` | `<table><label>c1\|c2</label>` |
