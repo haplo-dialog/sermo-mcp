@@ -1,8 +1,8 @@
 {
   "mcpServers": {
-    "gtk3sermo": {
+    "sermo": {
       "command": "python3",
-      "args": ["ABSOLUTE/PATH/TO/gtk3sermo-mcp/server.py"]
+      "args": ["/CHEMIN/ABSOLU/VERS/sermo-mcp/server.py"]
     }
   }
 }

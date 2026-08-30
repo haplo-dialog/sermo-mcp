@@ -44,7 +44,7 @@ Exemple pour un fichier `.mcp.json` :
 ```json
 {
   "mcpServers": {
-    "gtk3sermo": {
+    "sermo": {
       "command": "python3",
       "args": ["/chemin/vers/sermo-mcp/server.py"]
     }
@@ -83,6 +83,26 @@ donc personne ne l'avait vu.
 Codes de retour : `0` tout passe · `1` un exemple casse, **ou** rien n'a été
 extrait · `77` les binaires ne sont pas installés, rien n'a été vérifié. Un
 banc muet ne rend jamais 0.
+
+### Et qu'elle dit VRAI sur le code
+
+```sh
+SERMO_SRC=/chemin/vers/gtk3dialog-public ./tests/verifie-verite.sh
+```
+
+Le banc précédent prouve que la syntaxe documentée s'analyse. Il ne prouve rien
+sur le **fond** : l'affirmation « `safe_system()` impose une liste blanche de
+commandes autorisées » serait passée au travers — et elle est passée au travers
+pendant des mois, alors que le code rend `TRUE` sans rien vérifier quand
+`HAPLO_ALLOWED_CMDS` est absente.
+
+Celui-ci relie sept affirmations à un fait du code : le défaut de `safe_system`,
+l'absence de la vieille formule fausse, l'existence des deux verrous
+d'environnement, la version du pied de page, la couverture des balises des
+**deux** lexers, et le fait que le guide ne dissuade plus d'utiliser
+`man 5 haplo-dialog-xml`.
+
+Mêmes codes de retour : `0` · `1` · `77` si le dépôt logiciel est introuvable.
 
 ## Signaler un bug, proposer une idée
 
