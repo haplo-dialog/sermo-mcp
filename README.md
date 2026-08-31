@@ -115,6 +115,12 @@ manquant ferait passer le banc au vert en ne testant que la moitié du
 périmètre, sans le dire. Le résumé annonce désormais toujours quels ports ont
 réellement tourné.
 
+Le pipeline ne part que si la vérification a un sens : un changement dans
+`data/`, `tests/`, `server.py` ou `.gitlab-ci.yml`. Une coquille dans ce README
+ne recompile pas deux ports GTK — le job coûte 2,2 min de calcul, sur un quota
+de 400 min par mois partagé avec le projet `sermo`. Une **étiquette** déclenche
+toujours, sans condition de chemin : une version se vérifie en entier.
+
 ⚠️ **Ce que la CI ne couvre pas.** Elle se déclenche quand *ce dépôt* change.
 Or la documentation peut devenir fausse sans qu'on y touche : il suffit que le
 **logiciel** change. Pour attraper cette dérive-là, il faut un pipeline
