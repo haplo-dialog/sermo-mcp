@@ -104,6 +104,23 @@ d'environnement, la version du pied de page, la couverture des balises des
 
 Mêmes codes de retour : `0` · `1` · `77` si le dépôt logiciel est introuvable.
 
+### Les deux bancs tournent tout seuls
+
+`.gitlab-ci.yml` rejoue les deux bancs à chaque poussée, sur branche, merge
+request **et étiquette**. Le job clone les sources publiques de `sermo`,
+compile les deux ports, puis lance les deux contrôles.
+
+Les deux ports sont **exigés** (`SERMO_PORTS_REQUIS`). Sans ça, un port
+manquant ferait passer le banc au vert en ne testant que la moitié du
+périmètre, sans le dire. Le résumé annonce désormais toujours quels ports ont
+réellement tourné.
+
+⚠️ **Ce que la CI ne couvre pas.** Elle se déclenche quand *ce dépôt* change.
+Or la documentation peut devenir fausse sans qu'on y touche : il suffit que le
+**logiciel** change. Pour attraper cette dérive-là, il faut un pipeline
+*planifié* — cela se règle dans l'interface GitLab, pas dans ce fichier, et
+cela consomme des minutes à intervalle régulier.
+
 ## Signaler un bug, proposer une idée
 
 Ce compagnon ne publie rien lui-même. Pour remonter un bug ou une idée

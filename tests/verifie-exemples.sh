@@ -23,6 +23,18 @@ if [ -z "$BINS" ]; then
     echo "IGNORÉ : ni gtk3sermo ni gtk4sermo installés — rien n'a été vérifié." >&2
     exit 77
 fi
+
+# Avec un seul port installé, le banc passait au vert en testant LA MOITIÉ du
+# périmètre, sans le dire nulle part. SERMO_PORTS_REQUIS rend l'exigence
+# explicite : en CI on la pose, en local on reste tolérant mais le résumé
+# annonce toujours quels ports ont réellement tourné.
+for exige in ${SERMO_PORTS_REQUIS:-}; do
+    case " $BINS " in
+        *" $exige "*) ;;
+        *) echo "ÉCHEC : $exige est exigé (SERMO_PORTS_REQUIS) et introuvable." >&2
+           exit 1 ;;
+    esac
+done
 command -v xvfb-run >/dev/null 2>&1 || {
     echo "IGNORÉ : xvfb-run absent — rien n'a été vérifié." >&2; exit 77; }
 
@@ -106,7 +118,8 @@ for f in "$TMP"/*.xml; do
     done
 done
 
-printf '%s exemple(s) documenté(s), %s exécution(s), %s échec(s).\n' "$CAS" "$joues" "$echecs"
+printf '%s exemple(s) documenté(s), %s exécution(s), %s échec(s). Ports :%s\n' \
+    "$CAS" "$joues" "$echecs" "$BINS"
 [ "$joues" -gt 0 ] || { echo "ÉCHEC : rien n'a été joué." >&2; exit 1; }
 [ "$echecs" -eq 0 ] || exit 1
 echo "Tous les exemples de la documentation passent l'analyseur."
